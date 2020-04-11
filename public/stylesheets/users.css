@@ -1,0 +1,62 @@
+/*font BEGIN*/
+
+h1{
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*font END*/
+
+#Yalla{
+    color: #F0364A;
+}
+
+.login_background {
+    background-size: 100% 100%;
+    padding-top: 5%;
+}
+
+
+.login_form{
+    padding: 15% 10% 0% 0%;
+}
+
+/*email and password inputs*/
+.input_field{
+    padding-bottom: 5%;
+}
+
+.sign_in_button,
+.sign_up_button{
+    background-color: #7754F6;
+    border-radius: 25px 0px 25px 25px;
+    border-style: none;
+    transition:  background-color 0.8s;
+}
+
+.sign_in_button:hover,
+.sign_up_button:hover {
+    background-color: #FC859B;
+    border-style: none;
+}
+
+#sign_up,
+#sign_in{
+    padding-top: 5%;
+}
+
+.yalla_notlob_word{
+    transition: letter-spacing 0.7s;
+}
+
+.yalla_notlob_word:hover {
+    letter-spacing: 2px;
+    cursor: default;
+}
+
+.yalla_notlob_word .hash_n{
+    transition: color 0.5s ease-out 0.5s;
+}
+
+.yalla_notlob_word:hover .hash_n{
+    color: #FE8787;
+}

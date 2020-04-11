@@ -1,0 +1,87 @@
+// Place all the styles related to the users controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+/*
+    SignIn.html BEGIN
+*/
+
+/*font BEGIN*/
+
+
+h1{
+    font-family: 'Montserrat', sans-serif;
+}
+
+/*font END*/
+
+#Yalla{
+    color: #F0364A;
+}
+
+.login_background {
+    background-size: 100% 100%;
+    padding-top: 5%;
+}
+
+
+.login_form{
+    padding: 15% 10% 0% 0%;
+}
+
+/*email and password inputs*/
+.input_field{
+    padding-bottom: 5%;
+}
+
+.sign_in_button{
+    background-color: #7754F6;
+    border-radius: 25px 0px 25px 25px;
+    border-style: none;
+
+}
+
+.sign_in_button:hover {
+    background-color: #FC859B;
+    border-style: none;
+
+}
+
+#sign_up{
+    padding-top: 5%;
+}
+
+/*
+    SignIn.html END
+*/
+
+/**********************************************/
+/**********************************************/
+
+
+/*
+    SignUp.html BEGIN
+*/
+
+
+
+
+
+
+
+/*
+    SignUP.html END
+*/
+#sign_in{
+    padding-top: 5%;
+}
+
+.sign_up_button{
+    background-color: #7754F6;
+    border-radius: 25px 0px 25px 25px;
+    border-style: none;
+}
+
+.sign_up_button:hover{
+    background-color: #FC859B;
+    border-style: none;
+}
