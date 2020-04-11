@@ -60,3 +60,66 @@ h1{
 .yalla_notlob_word:hover .hash_n{
     color: #FE8787;
 }
+
+.social_media_auth{
+    padding-top: 5%;
+    font-size: 65px;
+    padding-left: 25%;
+}
+
+
+#fb_logo{
+    color: #3F5FBA;
+    transition: filter 0.3s ease-in-out;
+}
+#fb_logo:hover{
+    filter: drop-shadow(5px 1px 1px #BBBCC8);
+}
+
+#google_logo{
+    color: #FF7373;
+    transition: filter 0.3s ease-in-out;
+}
+
+#google_logo:hover{
+    filter: drop-shadow(5px 1px 1px #BBBCC8);
+}
+
+/*Groups page*/
+#group_header{
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    text-align: center;
+}
+
+.search_bar{
+    padding: 0% 25% 0% 25%;
+}
+
+.search_input{
+    border-radius: 20px;
+    padding-left: 2.5%;
+    box-shadow:none !important;
+}
+
+.search_input:focus{
+    border-color: #4335A7;
+}
+
+.add_group_button{
+    background-color: #8082E5;
+    border-radius: 20px;
+    border-style: none;
+    transition: background-color 0.9s ease-out;
+}
+
+.add_group_button:hover{
+    background-color: #4335A7;
+}
+
+.add_group_icon{
+    color: white;
+    font-size: 20px;
+    padding-left: 5px;
+    padding-right: 7.5px;
+}

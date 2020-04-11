@@ -4,4 +4,7 @@ class UsersController < ApplicationController
 
     def signup
     end
+
+    def groups
+    end
 end
