@@ -16,6 +16,15 @@ class User < ApplicationRecord
 
     has_many :groups
 
+    has_many :order_user
+    has_many :orders, through: :order_user
+    
+    has_many :items
+    
+    def items
+      Item.where(order_user: self.order_user)
+    end
+  
     def friendships
         self.friendships_as_friend_a + self.friendships_as_friend_b
     end
