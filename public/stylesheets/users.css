@@ -218,10 +218,31 @@ h1{
 
 .friends_list_container{
     text-align: center;
+    margin-left: 25px;
+    margin-right: 25px;
     border-radius: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
     box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
     overflow-y: scroll;
     overflow-x: hidden;
+}
+
+.friend_list_name{
+    padding-top: 1.5%;
+}
+
+.delete_friend_button{
+    background-color: #CEC9F2;
+    border-style: none;
+    transition: transform .1s ease-in; 
+    border-radius: 5px;
+}
+
+.delete_friend_button:hover{
+    transform: scale(1.1);
+    background-color: #F54D78;
+}
+
+.fa-user-tag,
+.fa-list-ul{
+    color: #837F8D;
 }
