@@ -93,7 +93,7 @@ h1{
 }
 
 .search_bar{
-    padding: 0% 25% 0% 25%;
+    padding: 0% 25% 5% 25%;
 }
 
 .search_input{
@@ -122,4 +122,35 @@ h1{
     font-size: 20px;
     padding-left: 5px;
     padding-right: 7.5px;
+}
+
+
+.groups_list_left{
+    margin-left: 4%;
+}
+
+.groups_list_left_box{
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+
+}
+
+.expanded_group_list_right{
+    margin-right: 4%;
+    
+    
+}
+
+.groups_list_right_box{
+    text-align: center;
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+}
+
+#groups_list_left_icon{
+    text-align: center;
+    padding-bottom: 1.5%;
 }
