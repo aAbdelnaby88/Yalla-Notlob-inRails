@@ -1,5 +1,10 @@
 /*font BEGIN*/
 
+body{
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
 h1{
     font-family: 'Montserrat', sans-serif;
 }
@@ -130,16 +135,15 @@ h1{
 }
 
 .groups_list_left_box{
-    text-align: center;
     background-color: #FFFFFF;
     border-radius: 15px;
     box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
 
 }
 
+
 .expanded_group_list_right{
     margin-right: 4%;
-    
     
 }
 
@@ -148,9 +152,76 @@ h1{
     background-color: #FFFFFF;
     border-radius: 15px;
     box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+    overflow-y: scroll;
+    overflow-x: hidden;
+
 }
 
 #groups_list_left_icon{
     text-align: center;
     padding-bottom: 1.5%;
+}
+
+#inside_left_text{
+    padding-top: 4px;
+}
+
+.inside_group_list{
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.inside_left_button_group{
+    padding-bottom: 15px;
+    padding-left: 20px;
+}
+
+.user_button{
+    background-color: #7D9AFF;
+    border-style: none;
+}
+
+.close_button{
+    background-color: #FC6987;
+    border-style: none;
+}
+
+.fa-user-plus{
+    color: #FFFFFF;
+}
+
+.add_friend_to_group_search_bar{
+    padding-top: 15px;
+}
+
+.add_group_button_right_box{
+    background-color: #7D9AFF;
+    border-radius: 20px;
+    border-style: none;
+    transition: background-color 0.9s ease-out;
+}
+
+.add_group_button_right_box:hover{
+    background-color: #4335A7;
+}
+
+
+/*
+    Friend's page
+*/
+
+#friends_list_h3{
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.friends_list_container{
+    text-align: center;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

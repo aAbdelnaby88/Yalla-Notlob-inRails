@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get '/signin', to: 'users#signin'
   get '/signup', to: 'users#signup'
   get '/groups', to: 'users#groups'
+  get '/friends', to: 'users#friends'
 end
