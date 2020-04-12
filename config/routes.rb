@@ -3,4 +3,5 @@ Rails.application.routes.draw do
   resources:users
   get '/signin', to: 'users#signin'
   get '/signup', to: 'users#signup'
+  get '/groups', to: 'users#groups'
 end
