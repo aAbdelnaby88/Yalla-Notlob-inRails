@@ -23,7 +23,7 @@
     <div class="container">
         <div class="row">
           <div class="col-6 login_form">
-            <form class="form-signin">
+            <form class="form-signin" action="/signup_form" method="GET">
               <div class="text-center mb-4">
                 <img class="mb-4" src="images/Logo.svg" alt="" width="72" height="72">
                 <h1 class="h3 mb-3 font-weight-normal yalla_notlob_word">
@@ -34,25 +34,25 @@
                 <label for="inputName">
                     <i class="fas fa-signature"></i>
                 </label>
-                <input type="text" id="inputName" class="form-control" placeholder="Full name" required autofocus>
+                <input type="text" id="inputName" class="form-control" name="user_full_name" placeholder="Full name" required autofocus>
               </div>
         
               <div class="form-label-group input_field">
                 <label for="inputEmail">
                   <i class="fa fa-at"></i>
                 </label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+                <input type="email" id="inputEmail" class="form-control" name="user_email_address" placeholder="Email address" required autofocus>
               </div>
         
               <div class="form-label-group input_field">
                 <label for="inputPassword">
                   <i class="fa fa-key"></i>
                 </label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                <input type="password" id="inputPassword" class="form-control" name="user_password" placeholder="Password" required>
               </div>
 
               <div class="form-label-group input_field">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Confirm Password" required>
+                <input type="password" id="inputPassword" class="form-control" name="user_confirmation_password" placeholder="Confirm Password" required>
               </div>
 
               <button class="btn btn-lg btn-primary btn-block sign_up_button" type="submit">
@@ -63,22 +63,7 @@
               <!--Don't have an account section-->
               <h6 id="sign_in">Already have an account ? <a href="http://">Sign In</a></h6>
             </form>
-
-            
           </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
           <div class="col-6 login_background">
             <img src="images/undraw_post_online_dkuk.svg" alt="">
           </div>
