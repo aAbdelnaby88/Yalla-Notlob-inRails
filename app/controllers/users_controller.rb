@@ -1,19 +1,37 @@
 class UsersController < ApplicationController
-    def signin
+    
+    def signin_form
+        user_email = params[:user_email]
+        password = params[:user_password]
+
+        # if a valid entered data by the user.
+        if (user_email.length > 0) && (password.length > 0)
+            is_regestered_user = User.where(email: user_email, password: password)
+            # if returned user object
+            if is_regestered_user.length > 0
+                render 'users/singed_in_success'
+                return is_regestered_user
+            end
+            render 'users/signed_in_error'
+        else
+            render 'users/signed_in_error'
+        end
     end
 
     # Sign up users.
-    def signup
+    def signup_form
         user_full_name = params['user_full_name'].to_s()
         user_email = params['user_email_address'].to_s()
         user_password = params['user_password'].to_s()
         user_confirmation_password = params['user_confirmation_password'].to_s()
 
-        # checking the vlidation of the email and the password.
+        # checking the vlidation of the email and the password and if true create a new user.
         if valid_email(user_email) && valid_password(user_password, user_confirmation_password)
             User.create(name: user_full_name, email: user_email, password: user_password)
             render 'users/signed_up_success'
+            return 
         else
+            puts "Error from the validating email"
             render 'users/signed_up_error'
         end
     end
