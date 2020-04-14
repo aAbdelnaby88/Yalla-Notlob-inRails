@@ -3,23 +3,50 @@ class UsersController < ApplicationController
     def signin_form
         user_email = params[:user_email]
         password = params[:user_password]
+        encrypted_password = ""
 
-        # if a valid entered data by the user.
-        if (user_email.length > 0) && (password.length > 0)
-            is_regestered_user = User.where(email: user_email, password: password)
-            # if returned user object
-            if is_regestered_user.length > 0
-                render 'users/singed_in_success'
-                return is_regestered_user
-            end
-            render 'users/signed_in_error'
+        is_regestered_user = User.where(email: user_email).first
+
+        # check the user's login password with the encrpted pass from the database.
+        if BCrypt::Password.new(is_regestered_user.password) == password
+            session[:logged_in_user] = is_regestered_user
+            redirect_to :groups
         else
-            render 'users/signed_in_error'
+            render 'users/signin'
         end
     end
 
+    def check_logged_in
+        if session[:logged_in_user] != nil
+            logged_in_user = session[:logged_in_user]
+            return logged_in_user
+        else
+            return nil
+        end
+    end
+
+    def log_out
+        reset_session
+        redirect_to :signin
+    end
+
+    # signin method for the html rendering
+    def signin
+        if check_logged_in == nil
+            redirect_to :signin
+        else
+            redirect_to :groups
+        end
+    end
+
+    # signup method for the html renderig
     def signup
         @user = User.new
+        if check_logged_in == nil
+            redirect_to :signup
+        else
+            redirect_to :groups
+        end
     end
 
     # Sign up users.
@@ -31,7 +58,7 @@ class UsersController < ApplicationController
 
         # checking the vlidation of the email and the password and if true create a new user.
         if ((user_password == user_confirmation_password) != nil)
-            my_password = BCrypt::Password.create("my password")#=>
+            my_password = BCrypt::Password.create(user_password)#=>
             @user = User.create(name: user_full_name, email: user_email, password: my_password)
             if @user.errors.any?
                 render 'users/signup'
@@ -45,31 +72,4 @@ class UsersController < ApplicationController
 
     def groups
     end
-
-    # validating the email(regex for the email, and if the email exists.)
-    # def valid_email(user_email)
-    #     @user_email = user_email
-    #     if @user_email.match(/\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
-    #         is_user_exist = User.where(email: @user_email)
-    #         # if returned an object from the database.
-    #         if is_user_exist.length > 0
-    #             return false;
-    #         else # if there is no returned object.
-    #             return true
-    #         end
-    #     else # if the email is not a valid email.
-    #         return false;
-    #     end
-    # end
-
-    # # validating the password if they're matching.
-    # def valid_password(password, conf_password)
-    #     @password = password
-    #     @conf_password = conf_password
-    #     if (@password == @conf_password)
-    #         return true
-    #     else
-    #         return false
-    #     end
-    # end
 end
