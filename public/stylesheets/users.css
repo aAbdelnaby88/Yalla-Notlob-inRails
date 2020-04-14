@@ -343,3 +343,45 @@ Add order page
     color: #FFD297;
     font-size: 20px;
 }
+
+/*
+    Order details
+*/
+
+#order_details_page_header{
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.order_details_table_left{
+    margin-left: 5%;
+    padding-top: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.forms_under_table{
+
+    padding-top: 20px;
+    margin-left: 5%;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+
+}
+
+.order_details_add_button{
+    width: 50%;
+    margin-left: 25%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    background-color: #4335A7;
+    border-style: none;
+}
+
+.order_details_form_1{
+    margin-bottom: 30px;
+}

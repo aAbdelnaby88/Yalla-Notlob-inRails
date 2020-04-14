@@ -19,4 +19,7 @@ class OrdersController < ApplicationController
 
     def order 
     end
+
+    def orderdetails
+    end
 end

@@ -10,6 +10,7 @@ resources:users
   get '/friends', to: 'users#friends'
   get '/orders/new', to: 'orders#addorder'
   get '/order', to: 'orders#order'
+  get '/orderdetails', to: 'orders#orderdetails'
 end
 
   
