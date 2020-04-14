@@ -16,4 +16,7 @@ class OrdersController < ApplicationController
 
     def addorder
     end
+
+    def order 
+    end
 end

@@ -314,3 +314,32 @@ Add order page
 .add_order_name_row{
     padding-top: 25px;
 }
+
+/*
+    Order page 
+*/
+
+#order_page_header{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.order_place_new_order_button{
+    width: 100%;
+    align-items: center;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    background-color: #7C64A4;
+    border-style: none;
+    transition: background-color .4s ease-in;
+}
+
+.order_place_new_order_button:hover{
+    background-color: #7554A0;
+}
+
+.place_order_icon{
+    color: #FFD297;
+    font-size: 20px;
+}
