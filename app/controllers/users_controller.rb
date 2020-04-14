@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+    require 'bcrypt'
     def signin_form
         user_email = params[:user_email]
         password = params[:user_password]
@@ -17,6 +18,10 @@ class UsersController < ApplicationController
         end
     end
 
+    def signup
+        @user = User.new
+    end
+
     # Sign up users.
     def signup_form
         user_full_name = params['user_full_name'].to_s()
@@ -26,18 +31,15 @@ class UsersController < ApplicationController
 
         # checking the vlidation of the email and the password and if true create a new user.
         if ((user_password == user_confirmation_password) != nil)
-
-            @is_done = User.create(name: user_full_name, email: user_email, password: user_password)
-            if @is_done.errors.any?
-                @is_done.errors.full_messages.each do |msg|
-                    puts "#{msg}"
-                end
-                render 'users/signed_up_error'
+            my_password = BCrypt::Password.create("my password")#=>
+            @user = User.create(name: user_full_name, email: user_email, password: my_password)
+            if @user.errors.any?
+                render 'users/signup'
             else
-                render 'users/signed_up_success'
+                redirect_to :groups
             end 
         else
-            render 'users/signed_up_error'
+            render 'users/signup'
         end
     end
 
