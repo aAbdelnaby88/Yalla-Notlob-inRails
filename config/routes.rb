@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  resources:users
+resources:users
   get '/', to: 'users#index'
   get '/signup', to: 'users#signup'
   get '/signup_form', to: 'users#signup_form'
@@ -12,5 +12,9 @@ Rails.application.routes.draw do
   delete '/groups/:id/users/:user_id', to: 'users#delete_group_user',as: :delete_group_user
   post '/groups/:id/users/:user_name', to: 'users#add_group_user',as: :add_group_user
   get '/friends', to: 'users#friends'
-
+  get '/orders/new', to: 'orders#addorder'
+  get '/order', to: 'orders#order'
+  get '/orderdetails', to: 'orders#orderdetails'
 end
+
+  
