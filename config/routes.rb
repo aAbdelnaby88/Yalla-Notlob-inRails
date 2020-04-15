@@ -7,5 +7,10 @@ Rails.application.routes.draw do
   get '/signin', to: 'users#signin'
   get '/signin_form', to: 'users#signin_form'
   get '/groups', to: 'users#groups'
+  post '/groups', to: 'users#new_group'
+  delete '/groups/:id', to: 'users#delete_group',as: :delete_group
+  delete '/groups/:id/users/:user_id', to: 'users#delete_group_user',as: :delete_group_user
+  post '/groups/:id/users/:user_name', to: 'users#add_group_user',as: :add_group_user
   get '/friends', to: 'users#friends'
+
 end
