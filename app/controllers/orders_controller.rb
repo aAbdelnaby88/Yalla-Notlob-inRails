@@ -13,4 +13,13 @@ class OrdersController < ApplicationController
 
         url = obj.public_url
     end
+
+    def addorder
+    end
+
+    def order 
+    end
+
+    def orderdetails
+    end
 end

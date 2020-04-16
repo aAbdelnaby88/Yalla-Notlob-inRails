@@ -24,7 +24,13 @@
         <div class="row">
           <div class="col-6 login_form">
             
-            <h1>Error signing up</h1>
+        <% if @is_done.errors.any? %>
+          <ul class="Signup_Errors">
+          <% for message_error in @is_done.errors.full_messages %>
+            <li>* <%= message_error %></li>
+          <% end %>
+          </ul>
+        <% end %>
 
           <div class="col-6 login_background">
             <img src="images/undraw_post_online_dkuk.svg" alt="">

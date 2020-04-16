@@ -246,3 +246,142 @@ h1{
 .fa-list-ul{
     color: #837F8D;
 }
+
+
+/*
+
+Add order page
+
+*/
+
+#add_orders_header{
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    text-align: center;
+}
+
+.add_orders_left_box,
+.add_orders_right_box{
+    text-align: center;
+}
+
+.add_order_left_box_container{
+    text-align: center;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+}
+
+.add_order_left_box_row{
+    padding-bottom: 35px;
+}
+
+.order_details_choose_file_browser{
+    margin-left: 45px;
+}
+
+.publish_button_add_order{
+    border-radius: 30px;
+    width: 100%;
+    background-color: #1B0559;
+    border-style: none;
+    transition: background-color .9s ease-out;
+}
+
+.publish_button_add_order:hover{
+    background-color: #8679B3;
+}
+
+.fa-fire{
+    color: #FBAC63;
+    font-size: 20px;
+}
+
+.add_orders_right_box_container{
+    text-align: center;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    margin-left: 25px;
+    margin-right: 25px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+
+}
+
+.add_order_name_row{
+    padding-top: 25px;
+}
+
+/*
+    Order page 
+*/
+
+#order_page_header{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.order_place_new_order_button{
+    width: 100%;
+    align-items: center;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    background-color: #7C64A4;
+    border-style: none;
+    transition: background-color .4s ease-in;
+}
+
+.order_place_new_order_button:hover{
+    background-color: #7554A0;
+}
+
+.place_order_icon{
+    color: #FFD297;
+    font-size: 20px;
+}
+
+/*
+    Order details
+*/
+
+#order_details_page_header{
+    text-align: center;
+    width: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.order_details_table_left{
+    margin-left: 5%;
+    padding-top: 20px;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.forms_under_table{
+
+    padding-top: 20px;
+    margin-left: 5%;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+
+}
+
+.order_details_add_button{
+    width: 50%;
+    margin-left: 25%;
+    border-radius: 15px;
+    margin-bottom: 20px;
+    background-color: #4335A7;
+    border-style: none;
+}
+
+.order_details_form_1{
+    margin-bottom: 30px;
+}
