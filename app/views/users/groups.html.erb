@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/users.css">
+
+
+  <title>Groups</title>
+</head>
+
+<body>
+  <h1 id="group_header">
+    <i class="fas fa-users"></i> Groups
+  </h1>
+
+  <!--search bar-->
+
+
+  <br>
+  <%= form_for @group do |f| %>
+  <div class="input-group search_bar">
+    <%= f.text_field :name,class: "form-control search_input" ,placeholder:"Add a new group" ,'aria-label':"Large" %>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary add_group_button" type="submit">
+        <i class="fas fa-plus-circle add_group_icon"></i>
+      </button>
+    </div>
+
+  </div>
+  <% end %>
+  <p>
+ 
+  </p>
+  <!--groups Section-->
+  <!-- Columns are always 50% wide, on mobile and desktop -->
+  <div class="row">
+    <div class="col-4 groups_list_left">
+
+      <div>
+        <h3 id="groups_list_left_icon">
+          <i class="fas fa-layer-group"></i> Groups List
+        </h3>
+      </div>
+
+      <div class="groups_list_left_box">
+        <!--Content displayed inside the left table-->
+        <div class="row inside_group_list">
+          <% for group in @groups %>
+          <div class="col-5">
+            <h5  id="inside_left_text"> <%=group.name %> </h5>
+          </div>
+          <div class="col-3"></div>
+          <div class="col-3 inside_left_button_group">
+            <div class="btn-group" role="group">
+              <button data-id="<%=group.id%>" onclick="selectGroup(this)" type="button"
+                class="btn btn-secondary user_button"><i class="fas fa-user-plus"></i></button>
+              <%= button_to  delete_group_path(:id =>group.id),{:method => "delete",class: "btn btn-secondary close_button"} do %>
+              <i class="fas fa-times"></i>
+              <% end %>
+            </div>
+          </div>
+          <hr>
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-1"></div>
+
+
+    <div id="group-content" style="visibility: hidden;" class="col-6 expanded_group_list_right">
+      <div>
+        <h3 id="groups_list_left_icon">
+          <i class="fas fa-user-friends"></i> <span id="group-title">ddddd</span>
+        </h3>
+      </div>
+
+      <!--Search bar right box-->
+      <div class="groups_list_right_box">
+      <form onsubmit="addUser(event)">
+        <div class="input-group search_bar add_friend_to_group_search_bar">
+          <input required id="friend-name" type="text" class="form-control search_input" placeholder="Add a friend to the group"
+            aria-label="Large">
+          <div class="input-group-append">
+            <button type="submit" class="btn btn-outline-secondary add_group_button_right_box" type="button">
+              <i class="fas fa-user-plus"></i></i>
+            </button>
+            
+          </div>
+        </div>
+        </form>
+       <div id="friends-list"></div>
+
+      </div>
+    </div>
+  </div>
+
+  <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script>
+
+  <script>
+    let groups = [
+       <%= raw @groups.to_json %> 
+    ][0];
+    groups = groups.map(group=>{
+      group.users = group.user_json.map(u=>JSON.parse(u))
+      delete group.user_json
+      return group
+    })
+    console.log(groups)
+
+    const groupContent = document.getElementById("group-content")
+    const groupTitle = document.getElementById("group-title")
+    const friendsList = document.getElementById("friends-list")
+    const friendName = document.getElementById("friend-name")
+    let groupId = 0 
+    function selectGroup(e) {
+      const id = e.dataset.id
+      groupId = id;
+      group = groups.find(obj => obj.id == id)
+      console.log(group.users)
+
+      let text = ""
+      group.users.forEach((user,index) => {
+        if(index % 3== 0){
+          text += '<div class="row">'
+        }
+
+        text += '<div class="col-2">'+
+        '<img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset=""></div>'
+
+      text+= `<div class="col-1">
+        ${user.name}
+        <button data-id="${group.id}" data-userid="${user.id}" onclick="deleteUser(this)"
+        type="button" class="btn btn-primary btn-sm">
+        <i class="fas fa-user-times"></i>
+        </button></div>
+        <div class="col-1"></div>`
+        if(index % 3 == 2){
+          text += '</div>'
+        }
+      }); 
+
+      if(group.users.length % 3 != 2 ) text += '</div>'
+      
+      friendsList.innerHTML = text
+
+      groupTitle.textContent = group.name
+
+      groupContent.style.visibility = "visible";
+
+    }
+
+    function deleteUser(e){
+      const id = e.dataset.id
+      const userId = e.dataset.userid
+      $.ajax({
+        url: `/groups/${id}/users/${userId}`,
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        type: 'DELETE',
+        success: function(result) {
+          location.reload();
+        }
+      });
+    }
+
+    function addUser(e){
+      e.preventDefault()
+      $.ajax({
+        url: `/groups/${groupId}/users/${friendName.value}`,
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        type: 'POST',
+        success: function(result) {
+          friendName.value = ""
+          location.reload();
+        }
+      });
+    }
+
+    const error = "<%= raw @group.errors.full_messages.to_sentence %>"
+    if(error){
+      alert(error)
+    }
+  
+  </script>
+</body>
+
+</html>

@@ -6,6 +6,9 @@ ruby '2.7.0'
 #Dotenv
 gem 'dotenv-rails', groups: [:development, :test]
 
+#AWS S#
+gem 'aws-sdk-s3', '~> 1.61', '>= 1.61.2'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 # Use mysql as the database for Active Record
