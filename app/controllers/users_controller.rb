@@ -35,9 +35,7 @@ class UsersController < ApplicationController
 
     # signin method for the html rendering
     def signin
-        if check_logged_in == nil
-            redirect_to :signin
-        else
+        unless check_logged_in == nil
             redirect_to :groups
         end
     end
@@ -45,23 +43,30 @@ class UsersController < ApplicationController
     # signup method for the html renderig
     def signup
         @user = User.new
-        if check_logged_in == nil
-            redirect_to :signup
-        else
+        unless check_logged_in == nil
             redirect_to :groups
         end
     end
 
 
     def friends
-        @u1=User.find_by_id(1)
-        @friends_list = @u1.friends
+        @u1=check_logged_in
+        p @u1
+        if @u1 == nil
+            redirect_to :signin
+        end
+        @friends_list = User.find_by_id(@u1['id']).friends
+        return @friends_list
     end
 
     def addnewFriend    
         newFriendEmail =params[:friend_email]+".com"
-        @u1=User.find_by_id(1)
-        @friends_list = @u1.friends
+        @u1=check_logged_in
+        p @u1
+        if @u1 == nil
+            redirect_to :signin
+        end
+        @friends_list = User.find_by_id(@u1['id']).friends
         found= false
         if newFriendEmail.length > 0
             @friends_list.each do |f|
@@ -75,7 +80,7 @@ class UsersController < ApplicationController
                 flash[:alert]= "Already Friends!!"
             else
                 friend=User.find_by_email(newFriendEmail)
-                Friendship.create(:friend_a_id=>@u1.id,:friend_b_id=>friend.id)
+                Friendship.create(:friend_a_id=>@u1['id'],:friend_b_id=>friend.id)
             end
         else
             flash[:alert]= "Enter Valid Email!!"
@@ -83,11 +88,16 @@ class UsersController < ApplicationController
     end
 
     def deleteFriend
-        f = Friendship.where(friend_a_id: 1, friend_b_id: params[:friend_id]).first()
+        @u1=check_logged_in
+        p @u1
+        if @u1 == nil
+            redirect_to :signin
+        end
+        f = Friendship.where(friend_a_id: @u1['id'], friend_b_id: params[:friend_id]).first()
         Friendship.delete(f.id)
         redirect_to :friends
     end
-  end
+
 
   # Sign up users.
   def signup_form
@@ -104,27 +114,37 @@ class UsersController < ApplicationController
             if @user.errors.any?
                 render 'users/signup'
             else
+                session[:logged_in_user] = @user
                 redirect_to :groups
             end 
         else
             render 'users/signup'
         end
 
-    end
   end
 
   def groups
+    @u1=check_logged_in
+    p @u1
+    if @u1 == nil
+        redirect_to :signin
+    end
     @group = Group.new
-    @groups = Group.eager_load(:users).where(:user_id =>1)
+    @groups = Group.eager_load(:users).where(:user_id =>@u1['id'])
   end
 
   def new_group
+    @u1=check_logged_in
+    p @u1
+    if @u1 == nil
+        redirect_to :signin
+    end
     @group = Group.new(params.require(:group).permit(:name))
-    @group.user_id = 1
+    @group.user_id = @u1['id']
     if @group.save
       redirect_to :groups
     else
-      @groups = Group.eager_load(:users).where(:user_id =>1)
+      @groups = Group.eager_load(:users).where(:user_id =>@u1['id'])
       render :groups
     end
 
@@ -140,9 +160,13 @@ class UsersController < ApplicationController
     redirect_to :groups
   end
 
-
   def add_group_user
-    user = User.find(1)
+    @u1=check_logged_in
+    p @u1
+    if @u1 == nil
+        redirect_to :signin
+    end
+    user = User.find(@u1['id'])
     friend = user.friends.detect{|f| f.name.casecmp(params[:user_name]) == 0}
     p friend
     if friend
