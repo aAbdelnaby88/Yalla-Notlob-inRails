@@ -1,21 +1,55 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-  def signin_form
-    user_email = params[:user_email]
-    password = params[:user_password]
 
-    # if a valid entered data by the user.
-    if !user_email.empty? && !password.empty?
-      is_regestered_user = User.where(email: user_email, password: password)
-      # if returned user object
-      unless is_regestered_user.empty?
-        render 'users/singed_in_success'
-        return is_regestered_user
-      end
-      render 'users/signed_in_error'
-    else
-      render 'users/signed_in_error'
+    require 'bcrypt'
+    def signin_form
+        user_email = params[:user_email]
+        password = params[:user_password]
+        encrypted_password = ""
+
+        is_regestered_user = User.where(email: user_email).first
+
+        # check the user's login password with the encrpted pass from the database.
+        if BCrypt::Password.new(is_regestered_user.password) == password
+            session[:logged_in_user] = is_regestered_user
+            redirect_to :groups
+        else
+            render 'users/signin'
+        end
+    end
+
+    def check_logged_in
+        if session[:logged_in_user] != nil
+            logged_in_user = session[:logged_in_user]
+            return logged_in_user
+        else
+            return nil
+        end
+    end
+
+    def log_out
+        reset_session
+        redirect_to :signin
+    end
+
+    # signin method for the html rendering
+    def signin
+        if check_logged_in == nil
+            redirect_to :signin
+        else
+            redirect_to :groups
+        end
+    end
+
+    # signup method for the html renderig
+    def signup
+        @user = User.new
+        if check_logged_in == nil
+            redirect_to :signup
+        else
+            redirect_to :groups
+        end
     end
   end
 
@@ -26,14 +60,20 @@ class UsersController < ApplicationController
     user_password = params['user_password'].to_s
     user_confirmation_password = params['user_confirmation_password'].to_s
 
-    # checking the vlidation of the email and the password and if true create a new user.
-    if valid_email(user_email) && valid_password(user_password, user_confirmation_password)
-      User.create(name: user_full_name, email: user_email, password: user_password)
-      render 'users/signed_up_success'
-      nil
-    else
-      puts 'Error from the validating email'
-      render 'users/signed_up_error'
+
+        # checking the vlidation of the email and the password and if true create a new user.
+        if ((user_password == user_confirmation_password) != nil)
+            my_password = BCrypt::Password.create(user_password)#=>
+            @user = User.create(name: user_full_name, email: user_email, password: my_password)
+            if @user.errors.any?
+                render 'users/signup'
+            else
+                redirect_to :groups
+            end 
+        else
+            render 'users/signup'
+        end
+
     end
   end
 
@@ -51,6 +91,7 @@ class UsersController < ApplicationController
       @groups = Group.eager_load(:users).where(:user_id =>1)
       render :groups
     end
+
   end
 
   def delete_group
@@ -97,4 +138,5 @@ class UsersController < ApplicationController
     @conf_password = conf_password
     @password == @conf_password
   end
+
 end

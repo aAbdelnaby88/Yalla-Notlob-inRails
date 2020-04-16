@@ -21,21 +21,10 @@ class User < ApplicationRecord
     
     has_many :items
 
-    def signup_validation(user_name, user_password, user_email)
-        begin
-            validates :user_name, presence: true
-            validates :user_password, presence: true
-            validates :user_email, confirmation: true
-            
-            if User.create(name: user_name, email: user_password, password: user_email)
-                return true
-            else
-                return false
-            end
-        rescue StandardError => e
-            return false
-        end
-    end
+    # has_secure_password
+    validates :email, presence: true, uniqueness: true
+    validates :name, presence: true
+    validates :password, presence: true
     
     def items
       Item.where(order_user: self.order_user)
