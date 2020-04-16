@@ -65,4 +65,41 @@ class UsersController < ApplicationController
             return false
         end
     end
+
+
+    def friends
+        @u1=User.find_by_id(1)
+        @friends_list = @u1.friends
+    end
+
+    def addnewFriend    
+        newFriendEmail =params[:friend_email]+".com"
+        @u1=User.find_by_id(1)
+        @friends_list = @u1.friends
+        found= false
+        if newFriendEmail.length > 0
+            @friends_list.each do |f|
+                if f.email == newFriendEmail
+                    found=true
+                    break
+                end
+            end
+
+            if found
+                flash[:alert]= "Already Friends!!"
+            else
+                friend=User.find_by_email(newFriendEmail)
+                Friendship.create(:friend_a_id=>@u1.id,:friend_b_id=>friend.id)
+            end
+        else
+            flash[:alert]= "Enter Valid Email!!"
+        end
+    end
+
+    def deleteFriend
+        f = Friendship.where(friend_a_id: 1, friend_b_id: params[:friend_id]).first()
+        Friendship.delete(f.id)
+        redirect_to :friends
+    end
+
 end

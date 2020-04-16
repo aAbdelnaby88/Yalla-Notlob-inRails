@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   get '/signin_form', to: 'users#signin_form'
   get '/groups', to: 'users#groups'
   get '/friends', to: 'users#friends'
+  post '/friends/:friend_email', to: 'users#addnewFriend'
+  delete '/friends/:friend_id', to: 'users#deleteFriend' ,as: :delete_friend
 end
