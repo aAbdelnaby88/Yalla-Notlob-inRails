@@ -17,6 +17,7 @@ resources:users
   get '/orders/new', to: 'orders#addorder'
   get '/order', to: 'orders#order'
   get '/orderdetails', to: 'orders#orderdetails'
+  get '/forgot_password', to: 'users#forgot_password'
 end
 
   
