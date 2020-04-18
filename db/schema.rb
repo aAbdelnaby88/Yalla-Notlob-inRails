@@ -12,7 +12,7 @@
 
 ActiveRecord::Schema.define(version: 2020_04_11_221319) do
 
-  create_table "friendrequests", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "friendrequests", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "requestor_id"
     t.bigint "receiver_id"
     t.datetime "created_at", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_221319) do
     t.index ["requestor_id"], name: "index_friendrequests_on_requestor_id"
   end
 
-  create_table "friendships", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "friendships", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "friend_a_id"
     t.bigint "friend_b_id"
     t.datetime "created_at", null: false
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_221319) do
     t.index ["friend_b_id"], name: "index_friendships_on_friend_b_id"
   end
 
-  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -38,12 +38,12 @@ ActiveRecord::Schema.define(version: 2020_04_11_221319) do
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
-  create_table "groups_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "groups_users", id: false, options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "group_id", null: false
     t.bigint "user_id", null: false
   end
 
-  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "items", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
     t.integer "amount"
     t.float "price"
@@ -54,7 +54,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_221319) do
     t.index ["order_user_id"], name: "index_items_on_order_user_id"
   end
 
-  create_table "order_users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "order_users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.bigint "order_id"
     t.bigint "user_id"
     t.boolean "status", default: false
@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_221319) do
     t.index ["user_id"], name: "index_order_users_on_user_id"
   end
 
-  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "orders", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.integer "meal"
     t.string "from"
     t.bigint "user_id"
@@ -75,7 +75,7 @@ ActiveRecord::Schema.define(version: 2020_04_11_221319) do
     t.index ["user_id"], name: "index_orders_on_user_id"
   end
 
-  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+  create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=latin1", force: :cascade do |t|
     t.string "name"
     t.string "email"
     t.string "password"
