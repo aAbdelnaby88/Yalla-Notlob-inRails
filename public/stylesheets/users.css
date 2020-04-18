@@ -32,16 +32,15 @@ h1{
 
 .sign_in_button,
 .sign_up_button{
-    background-color: #7754F6;
-    border-radius: 25px 0px 25px 25px;
-    border-style: none;
-    transition:  background-color 0.8s;
+    background-color: #7754F6 !important;
+    border-radius: 25px 0px 25px 25px !important;
+    border-style: none !important;
+    transition:  background-color 0.8s !important;
 }
 
 .sign_in_button:hover,
 .sign_up_button:hover {
-    background-color: #FC859B;
-    border-style: none;
+    background-color: #FC859B !important;
 }
 
 #sign_up,
