@@ -10,7 +10,7 @@ class User < ApplicationRecord
     class_name: :Friendship  
     has_many :friendships_as_friend_b,foreign_key: :friend_b_id, 
     class_name: :Friendship   
-    has_many :friend_as, through: :friendships_as_friend_b   
+    has_many :friend_as, through: :friendships_as_friend_b 
     has_many :friend_bs, through: :friendships_as_friend_a  
 
 

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <% @title = "Friends" %>
+    <link rel="stylesheet" href="/stylesheets/users.css">
+</head>
+<body>
+
+    <h1 id="group_header">
+        <i class="fas fa-user-tag"></i> Friends
+    </h1>
+
+    <!--search bar-->
+    <form onsubmit="addUser(event)">
+        <div class="input-group search_bar">
+            <input type="text" id="friend-mail" class="form-control search_input" placeholder="Your friend's email address" aria-label="Large">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary add_group_button" type="submit">
+                <i class="fas fa-plus-circle add_group_icon"></i>
+              </button>
+            </div>
+        </div>
+    </form>
+
+    <!--Friends list-->
+    <div>
+        <h3 id="friends_list_h3">
+            <i class="fas fa-list-ul"></i> Friend's List
+        </h3>
+    </div>
+
+    <div class="row friends_list_container">
+        <% @friends_list.each do |friend| %>
+            <div class="col-2">
+                <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
+            </div>
+
+            <div class="col-2 friend_list_name">
+                <h6> <%= friend.name %> </h6>
+                <%= button_to  delete_friend_url(:friend_id =>friend.id),{:method => "delete",class: "btn btn-primary btn-sm delete_friend_button"} do %>
+                  <i class="fas fa-user-times"></i>
+                <% end %>
+            </div>
+            <% end %>
+
+    </div>
+
+ <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"> </script>
+
+<script>
+    const friendMail = document.getElementById("friend-mail")
+    function addUser(e){
+      e.preventDefault()
+      console.log(friendMail)
+      $.ajax({
+        url: `/friends/${friendMail.value}`,
+        beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+        type: 'POST',
+        success: function(result) {
+          friendMail.value = ""
+          location.reload();
+        }
+      });
+    }
+</script>
+    
+</body>
+</html>
