@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class UsersController < ApplicationController
-
+    layout false, only: [:signin, :signup]
     require 'bcrypt'
     def signin_form
         user_email = params[:user_email]
