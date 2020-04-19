@@ -5,7 +5,7 @@ body{
     overflow-y: scroll;
 }
 
-h1{
+h1, h3{
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -384,4 +384,50 @@ Add order page
 
 .order_details_form_1{
     margin-bottom: 30px;
+}
+
+/*
+    index.html
+*/
+.home_main_title{
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+.home_row_1{
+    text-align: center;
+}
+
+/*Latest orders and firends activity h3*/
+.home_row_1_col_1,
+.home_row_1_col_2{
+    padding-bottom: 20px;
+}
+
+.home_row_2_col_1,
+.home_row_2_col_3{
+    text-align: center;
+    border-radius: 15px;
+    box-shadow: 0 5px 10px rgba(154,160,185,.05), 0 15px 40px rgba(166,173,201,.2);
+
+}
+
+.logout_navbar_button{
+    background-color: #EF6D97;
+    color: white;
+    border-style: none;
+    border-radius: 5px;
+    transition: background-color 0.9s ease;
+}
+
+.logout_navbar_button:hover{
+    background-color: #F79BB0;
+
+}
+
+.footer_note{
+    padding-left: 50%;
+    padding-right: 50%;
+
+    color: white !important;
 }
