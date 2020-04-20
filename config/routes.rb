@@ -3,9 +3,10 @@ Rails.application.routes.draw do
 resources:users
   get '/', to: 'users#index'
   get '/signup', to: 'users#signup'
-  get '/signup_form', to: 'users#signup_form'
+  post '/signup_form', to: 'users#signup_form'
   get '/signin', to: 'users#signin'
-  get '/signin_form', to: 'users#signin_form'
+  post '/signin_form', to: 'users#signin_form'
+  post '/logout', to: 'users#log_out'
   get '/groups', to: 'users#groups'
   post '/groups', to: 'users#new_group'
   delete '/groups/:id', to: 'users#delete_group',as: :delete_group

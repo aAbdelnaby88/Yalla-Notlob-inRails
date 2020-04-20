@@ -23,7 +23,8 @@
     <div class="container">
         <div class="row">
           <div class="col-6 login_form">
-            <form class="form-signin" action="/signup_form" method="GET">
+            <form class="form-signin" action="/signup_form" method="POST">
+              <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
               <div class="text-center mb-4">
                 <img class="mb-4" src="images/Logo.svg" alt="" width="72" height="72">
                 <h1 class="h3 mb-3 font-weight-normal yalla_notlob_word">
@@ -61,7 +62,7 @@
               </button>
 
               <!--Don't have an account section-->
-              <h6 id="sign_in">Already have an account ? <a href="http://">Sign In</a></h6>
+              <h6 id="sign_in">Already have an account ? <a href="/signin">Sign In</a></h6>
             </form>
           </div>
           <div class="col-6 login_background">

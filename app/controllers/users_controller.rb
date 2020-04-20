@@ -3,6 +3,14 @@
 class UsersController < ApplicationController
     layout false, only: [:signin, :signup]
     require 'bcrypt'
+
+    def index 
+        @u1=check_logged_in
+        if @u1 == nil
+            redirect_to :signin
+        end
+    end
+
     def signin_form
         user_email = params[:user_email]
         password = params[:user_password]
@@ -13,7 +21,7 @@ class UsersController < ApplicationController
         # check the user's login password with the encrpted pass from the database.
         if BCrypt::Password.new(is_regestered_user.password) == password
             session[:logged_in_user] = is_regestered_user
-            redirect_to :groups
+            redirect_to ""
         else
             render 'users/signin'
         end
@@ -36,7 +44,7 @@ class UsersController < ApplicationController
     # signin method for the html rendering
     def signin
         unless check_logged_in == nil
-            redirect_to :groups
+            redirect_to ""
         end
     end
 
@@ -44,7 +52,7 @@ class UsersController < ApplicationController
     def signup
         @user = User.new
         unless check_logged_in == nil
-            redirect_to :groups
+            redirect_to ""
         end
     end
 
@@ -53,7 +61,7 @@ class UsersController < ApplicationController
         @u1=check_logged_in
         p @u1
         if @u1 == nil
-            redirect_to :signin
+            return redirect_to :signin
         end
         @friends_list = User.find_by_id(@u1['id']).friends
         return @friends_list
@@ -62,7 +70,6 @@ class UsersController < ApplicationController
     def addnewFriend    
         newFriendEmail =params[:friend_email]+".com"
         @u1=check_logged_in
-        p @u1
         if @u1 == nil
             redirect_to :signin
         end
@@ -115,7 +122,7 @@ class UsersController < ApplicationController
                 render 'users/signup'
             else
                 session[:logged_in_user] = @user
-                redirect_to :groups
+                redirect_to ""
             end 
         else
             render 'users/signup'
@@ -127,7 +134,7 @@ class UsersController < ApplicationController
     @u1=check_logged_in
     p @u1
     if @u1 == nil
-        redirect_to :signin
+        return redirect_to :signin
     end
     @group = Group.new
     @groups = Group.eager_load(:users).where(:user_id =>@u1['id'])
