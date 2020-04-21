@@ -1,14 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="/stylesheets/users.css">
-  <% @title = "Groups" %>
-</head>
-
-<body>
   <h1 id="group_header">
     <i class="fas fa-users"></i> Groups
   </h1>
@@ -137,7 +127,7 @@
       text+= `<div class="col-1">
         ${user.name}
         <button data-id="${group.id}" data-userid="${user.id}" onclick="deleteUser(this)"
-        type="button" class="btn btn-primary btn-sm">
+        type="button" class="btn btn-danger btn-sm">
         <i class="fas fa-user-times"></i>
         </button></div>
         <div class="col-1"></div>`
@@ -188,6 +178,3 @@
     }
   
   </script>
-</body>
-
-</html>

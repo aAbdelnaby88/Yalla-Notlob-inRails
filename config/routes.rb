@@ -17,7 +17,10 @@ resources:users
   delete '/friends/:friend_id', to: 'users#deleteFriend' ,as: :delete_friend
   get '/orders/new', to: 'orders#addorder'
   get '/order', to: 'orders#order'
-  get '/orderdetails', to: 'orders#orderdetails'
+  get '/orders/:id', to: 'orders#show_order'
+  post '/orders/:id/items', to: 'orders#create_item'
+  delete '/orders/:id/items/:item_id', to: 'orders#delete_item',as: :delete_item
+
 end
 
   

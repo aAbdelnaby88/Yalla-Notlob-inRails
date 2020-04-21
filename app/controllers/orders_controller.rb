@@ -20,6 +20,40 @@ class OrdersController < ApplicationController
     def order 
     end
 
-    def orderdetails
+    def show_order
+        @order = Order.where(id: params[:id]).first
+        @user = session[:logged_in_user]
+
+        unless @order
+            return render_404
+        end
+        
+    end
+
+    def render_404
+        respond_to do |format|
+          format.html { render :file => "#{Rails.root}/public/404", :layout => false, :status => :not_found }
+          format.xml  { head :not_found }
+          format.any  { head :not_found }
+        end
+    end
+
+    def create_item
+        
+        @order = Order.find(params[:id])
+        @user = session[:logged_in_user]
+        item = Item.create(:name => params[:name], :price => params[:price],
+            :amount => params[:amount], :comment => params[:comment],
+            :order_user => User.find(@user["id"]).order_user.where(:order_id => @order.id).first)
+        p "item=>",item
+        redirect_to action: 'show_order', id: @order.id
+    end
+
+    def delete_item
+        
+        @order = Order.find(params[:id])
+        Item.find(params[:item_id]).delete
+
+        redirect_to action: 'show_order', id: @order.id
     end
 end
