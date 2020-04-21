@@ -3,6 +3,8 @@
 class UsersController < ApplicationController
 
     require 'bcrypt'
+    require 'net/smtp'
+
     def signin_form
         user_email = params[:user_email]
         password = params[:user_password]
@@ -106,21 +108,32 @@ class UsersController < ApplicationController
     user_password = params['user_password'].to_s
     user_confirmation_password = params['user_confirmation_password'].to_s
 
-
-        # checking the vlidation of the email and the password and if true create a new user.
-        if ((user_password == user_confirmation_password) != nil)
-            my_password = BCrypt::Password.create(user_password)#=>
-            @user = User.create(name: user_full_name, email: user_email, password: my_password)
-            if @user.errors.any?
-                render 'users/signup'
-            else
-                session[:logged_in_user] = @user
-                redirect_to :groups
-            end 
-        else
+    @user = User.new
+    # checking the vlidation of the email and the password and if true create a new user.
+    if check_password(user_password, user_confirmation_password)
+        my_password = BCrypt::Password.create(user_password)#=>
+        @user = User.create(name: user_full_name, email: user_email, password: my_password)
+        if @user.errors.any?
             render 'users/signup'
-        end
+        else
+            session[:logged_in_user] = @user
+            redirect_to :groups
+        end 
+    else
+        render 'users/signup'
+    end
+  end
 
+  def check_password(user_password, confirm_password)
+    if (user_password != nil) && (confirm_password != nil)
+        if (user_password == confirm_password)
+            return true
+        else 
+            return false
+        end
+    else
+        return false
+    end
   end
 
   def groups
@@ -175,27 +188,13 @@ class UsersController < ApplicationController
     redirect_to :groups
   end
 
-  # validating the email(regex for the email, and if the email exists.)
-  #def valid_email(user_email)
-  #  @user_email = user_email
-  #  if @user_email.match(/\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
-  #    is_user_exist = User.where(email: @user_email)
-  #    # if returned an object from the database.
-  #    if !is_user_exist.empty?
-  #      false
-  #    else # if there is no returned object.
-  #      true
-  #    end
-  #  else # if the email is not a valid email.
-  #    false
-  #  end
-  #end
-#
-  ## validating the password if they're matching.
-  #def valid_password(password, conf_password)
-  #  @password = password
-  #  @conf_password = conf_password
-  #  @password == @conf_password
-  #end
-
+  # send an email with a link of the form and the id of the user.
+  def forgot_password_action
+    # send an email from here to the user
+    user_forgot_password_email = params[:user_email]
+    Net::SMTP.start('smtp.gmail.com', 578) do |smtp|
+        smtp.send_message 'coool', 'fundraiser.charity.org@gmail.com', 'magdia883@gmail.com'
+      end
+    render 'users/forgot_password_message'
+  end
 end
