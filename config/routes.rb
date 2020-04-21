@@ -19,6 +19,7 @@ resources:users
   get '/orderdetails', to: 'orders#orderdetails'
   get '/forgot_password', to: 'users#forgot_password'
   post '/forgot_password', to: 'users#forgot_password_action'
+  get '/change_password_form', to: 'users#change_password_form'
 end
 
   
