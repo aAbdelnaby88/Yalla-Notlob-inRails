@@ -175,27 +175,32 @@ class UsersController < ApplicationController
     redirect_to :groups
   end
 
-  # validating the email(regex for the email, and if the email exists.)
-  #def valid_email(user_email)
-  #  @user_email = user_email
-  #  if @user_email.match(/\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
-  #    is_user_exist = User.where(email: @user_email)
-  #    # if returned an object from the database.
-  #    if !is_user_exist.empty?
-  #      false
-  #    else # if there is no returned object.
-  #      true
-  #    end
-  #  else # if the email is not a valid email.
-  #    false
-  #  end
-  #end
-#
-  ## validating the password if they're matching.
-  #def valid_password(password, conf_password)
-  #  @password = password
-  #  @conf_password = conf_password
-  #  @password == @conf_password
-  #end
+    def is_friend
+        @u1=check_logged_in
+        p @u1
+        if @u1 == nil
+            redirect_to :signin
+        end
+        @friends_list = User.find_by_id(@u1['id']).friends
+        @friend = nil
+        newFriendEmail = params[:email]
+        p newFriendEmail
+        p @friends_list
+        if newFriendEmail.length > 0
+            @friends_list.each do |f|
+                if f.email == newFriendEmail
+                    p "found"
+                    @friend = f
+                    break
+                end
+            end
+        end
+        if @friend
+            msg = [{:id => @friend.id, :email => @friend.email, :name => @friend.name}]
+            return render :json => msg
+        end
+
+        return render :json => {:error => "not-found"}.to_json, :status => 404 
+    end
 
 end

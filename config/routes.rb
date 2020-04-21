@@ -21,6 +21,7 @@ resources:users
   get '/orderdetails', to: 'orders#orderdetails'
 
   post '/orders/new/:friend_email', to: 'orders#addOrderFriends'
+  post '/is-friend', to: "users#is_friend"
 end
 
   

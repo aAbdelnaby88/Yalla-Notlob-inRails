@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/users.css">
     <%= @title = "Add Order" %>
 </head>
+
 <body>
     <h1 id="add_orders_header">
         <i class="fas fa-concierge-bell"></i> Add order
@@ -14,7 +16,7 @@
 
 
     <div class="row">
-        
+
         <div class="col-5 add_orders_left_box">
 
             <div>
@@ -22,7 +24,7 @@
                     <i class="far fa-list-alt"></i> Order details
                 </h3>
             </div>
-        <%= form_with model: @order,:url => :add_order_path do |f| %>
+            <%= form_with model: @order,:url => :add_order_path do |f| %>
             <div class="row add_order_left_box_container">
                 <div class="col-5 add_order_left_box_row">
                     <i class="fas fa-bread-slice"></i> Order for:
@@ -30,10 +32,10 @@
                 <div class="col-1"></div>
 
                 <div class="col-6 add_order_left_box_row">
-                  <%= f.select(:meal  ,['Breakfast','Lunch','Dinner'],{},
-                  {:class=>"form-control"}) %> 
+                    <%= f.select(:meal  ,['Breakfast','Lunch','Dinner'],{},
+                  {:class=>"form-control"}) %>
                 </div>
-                
+
 
 
                 <div class="col-5 add_order_left_box_row">
@@ -47,22 +49,20 @@
                 </div>
 
                 <div class="col-5 add_order_left_box_row">
-                    <i class="fas fa-hashtag"></i> With: 
+                    <i class="fas fa-hashtag"></i> With:
                 </div>
 
                 <div class="col-1"></div>
-                <form onsubmit="addUser(event)">
                     <div class="col-6 input-group add_order_left_box_row">
                         <input type="text" id="friend-mail" class="form-control" placeholder="Friend or group name">
                         <div class="input-group-append">
-                            <button  class="btn btn-outline-secondary add_group_button" type="submit">
-                            <i class="fas fa-plus-circle add_group_icon"></i>
+                            <button class="btn btn-outline-secondary add_group_button" onclick="addUser(event)" >
+                                <i class="fas fa-plus-circle add_group_icon"></i>
                             </button>
                         </div>
                     </div>
-                </form>
 
-                
+
                 <div class="col-4 add_order_left_box_row">
                     <i class="fas fa-camera-retro"></i> Menu Image:
                 </div>
@@ -78,14 +78,14 @@
 
                 <div class="col-4">
                     <button class="btn btn-primary publish_button_add_order" type="submit">
-                        <i class="fas fa-fire"></i> Publish 
+                        <i class="fas fa-fire"></i> Publish
                     </button>
                 </div>
 
                 <div class="col-4">
                 </div>
             </div>
-        <% end %>
+            <% end %>
 
         </div>
 
@@ -108,52 +108,61 @@
                 </div>
 
                 <div class="col-2 add_order_name_row">
-                    HIS NAME
-                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip" data-placement="right" title="Remove friend">
+                    HIS NAME 
+                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip"
+                        data-placement="right" title="Remove friend">
                         <i class="fas fa-user-times"></i>
                     </button>
                 </div>
 
                 <div class="col-4"></div>
 
-                <div class="col-2">
+                <div class="col-2"> 
                     <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
                 </div>
 
                 <div class="col-2 add_order_name_row">
                     HIS NAME
-                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip" data-placement="right" title="Remove friend">
+                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip"
+                        data-placement="right" title="Remove friend">
                         <i class="fas fa-user-times"></i>
                     </button>
                 </div>
 
             </div>
 
-           
+
         </div>
     </div>
 
- <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"> </script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"> </script>
     <script>
         const friendMail = document.getElementById("friend-mail")
         console.log(friendMail)
-        function addUser(){
+
+        function addUser(e) {
+            console.log("dddd")
             e.preventDefault()
             console.log(friendMail)
             $.ajax({
-              url: `/orders/new/${friendMail.value}`,
-              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
-              type: 'POST',
-              success: function(result) {
-                friendMail.value = ""
-                location.reload();
-              }
+                url: `/is-friend`,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                type: 'POST',
+                data: {
+                    email: friendMail.value
+                },
+                success: function (result) {
+                    /* friendMail.value = ""
+                    location.reload(); */
+                    console.log(result)
+                }
             });
         }
     </script>
-    
+
 </body>
+
 </html>
