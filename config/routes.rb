@@ -3,10 +3,16 @@ Rails.application.routes.draw do
 resources:users
   get '/', to: 'users#index'
   get '/signup', to: 'users#signup'
+<<<<<<< HEAD
   post '/signup_form', to: 'users#signup_form'
   get '/signin', to: 'users#signin'
   post '/signin_form', to: 'users#signin_form'
   post '/logout', to: 'users#log_out'
+=======
+  post '/signup', to: 'users#signup_form'
+  get '/signin', to: 'users#signin'
+  post '/signin', to: 'users#signin_form'
+>>>>>>> fix-password
   get '/groups', to: 'users#groups'
   post '/groups', to: 'users#new_group'
   delete '/groups/:id', to: 'users#delete_group',as: :delete_group
@@ -17,10 +23,17 @@ resources:users
   delete '/friends/:friend_id', to: 'users#deleteFriend' ,as: :delete_friend
   get '/orders/new', to: 'orders#addorder'
   get '/order', to: 'orders#order'
+<<<<<<< HEAD
   get '/orders/:id', to: 'orders#show_order'
   post '/orders/:id/items', to: 'orders#create_item'
   delete '/orders/:id/items/:item_id', to: 'orders#delete_item',as: :delete_item
 
+=======
+  get '/orderdetails', to: 'orders#orderdetails'
+  get '/forgot_password', to: 'users#forgot_password'
+  post '/forgot_password', to: 'users#forgot_password_action'
+  get '/change_password_form', to: 'users#change_password_form'
+>>>>>>> fix-password
 end
 
   

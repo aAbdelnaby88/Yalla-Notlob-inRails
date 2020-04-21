@@ -29,16 +29,50 @@
 
 <body>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-6 login_form">
-        <form class="form-signin" action="/signin_form" method="POST">
-          <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
-          <div class="text-center mb-4">
-            <img class="mb-4" src="images/Logo.svg" alt="" width="72" height="72">
-            <h1 class="h3 mb-3 font-weight-normal yalla_notlob_word">
-              <span class="hash_n">#</span><span id="Yalla">Yalla</span><span class="hash_n">N</span>otlob</h1>
+    <div class="container">
+        <div class="row">
+          <div class="col-6 login_form">
+            <form class="form-signin" action="/signin" method="POST">
+            <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
 
+              <div class="text-center mb-4">
+                <img class="mb-4" src="images/Logo.svg" alt="" width="72" height="72">
+                <h1 class="h3 mb-3 font-weight-normal yalla_notlob_word">
+                  <span class="hash_n">#</span><span id="Yalla">Yalla</span><span class="hash_n">N</span>otlob</h1>
+                
+              </div>
+        
+              <div class="form-label-group input_field">
+                <label for="inputEmail">
+                  <i class="fa fa-at"></i>
+                </label>
+                <input type="email" id="inputEmail" class="form-control" name="user_email" placeholder="Email address" required autofocus>
+              </div>
+        
+              <div class="form-label-group input_field">
+                <label for="inputPassword">
+                  <i class="fa fa-key"></i>
+                </label>
+                <input type="password" id="inputPassword" class="form-control" name="user_password" placeholder="Password" required>
+              </div>
+        
+              <div class="checkbox mb-3">
+                <label>
+                  <input type="checkbox" value="remember-me"> Remember me
+                </label>
+              </div>
+              <button class="btn btn-lg btn-primary btn-block sign_in_button" type="submit">
+                <i class="fas fa-sign-in-alt"></i>
+                Sign in
+              </button>
+
+              <!--Don't have an account section-->
+              <h6 id="sign_up">Don't have an account yet ? <a href="/signup">Sign Up</a></h6>
+              <h6> Forgot your password ? <a href="/forgot_password">Click here</a> to reset it</h6>
+              <a href=""><i class="fab fa-facebook-square social_media_auth" id="fb_logo"></i></a> <a href=""><i class="fab fa-google-plus-square social_media_auth" id="google_logo"></i></a>
+            </form>
+
+            
           </div>
 
           <div class="form-label-group input_field">

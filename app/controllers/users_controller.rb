@@ -115,19 +115,18 @@ class UsersController < ApplicationController
 
 
         # checking the vlidation of the email and the password and if true create a new user.
-        if ((user_password == user_confirmation_password) != nil)
-            my_password = BCrypt::Password.create(user_password)#=>
-            @user = User.create(name: user_full_name, email: user_email, password: my_password)
-            if @user.errors.any?
-                render 'users/signup'
-            else
-                session[:logged_in_user] = @user
-                redirect_to ""
-            end 
-        else
+    if ((user_password == user_confirmation_password) != nil)
+        my_password = BCrypt::Password.create(user_password)#=>
+        @user = User.create(name: user_full_name, email: user_email, password: my_password)
+        if @user.errors.any?
             render 'users/signup'
-        end
-
+        else
+            session[:logged_in_user] = @user
+            redirect_to ""
+        end 
+    else
+        render 'users/signup'
+    end
   end
 
   def groups
@@ -181,28 +180,5 @@ class UsersController < ApplicationController
     end
     redirect_to :groups
   end
-
-  # validating the email(regex for the email, and if the email exists.)
-  #def valid_email(user_email)
-  #  @user_email = user_email
-  #  if @user_email.match(/\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i)
-  #    is_user_exist = User.where(email: @user_email)
-  #    # if returned an object from the database.
-  #    if !is_user_exist.empty?
-  #      false
-  #    else # if there is no returned object.
-  #      true
-  #    end
-  #  else # if the email is not a valid email.
-  #    false
-  #  end
-  #end
-#
-  ## validating the password if they're matching.
-  #def valid_password(password, conf_password)
-  #  @password = password
-  #  @conf_password = conf_password
-  #  @password == @conf_password
-  #end
 
 end

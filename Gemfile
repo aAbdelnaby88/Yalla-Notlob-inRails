@@ -6,6 +6,12 @@ ruby '2.7.0'
 #Dotenv
 gem 'dotenv-rails', groups: [:development, :test]
 
+# For securing password.
+gem 'bcrypt', '~> 3.1.7'
+
+# smtp gem
+gem 'net-smtp'
+
 #AWS S#
 gem 'aws-sdk-s3', '~> 1.61', '>= 1.61.2'
 
