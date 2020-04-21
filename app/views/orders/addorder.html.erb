@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/users.css">
-    <% @title = "Add Order" %>
+    <%= @title = "Add Order" %>
 </head>
 <body>
     <h1 id="add_orders_header">
@@ -22,20 +22,19 @@
                     <i class="far fa-list-alt"></i> Order details
                 </h3>
             </div>
-
+        <%= form_with model: @order,:url => :add_order_path do |f| %>
             <div class="row add_order_left_box_container">
                 <div class="col-5 add_order_left_box_row">
                     <i class="fas fa-bread-slice"></i> Order for:
                 </div>
-
                 <div class="col-1"></div>
 
                 <div class="col-6 add_order_left_box_row">
-                    <select class="form-control">
-                        <option value="lunch">Lunch</option>
-                        <option value="breakfast">Breakfast</option>
-                      </select>
+                  <%= f.select(:meal  ,['Breakfast','Lunch','Dinner'],{},
+                  {:class=>"form-control"}) %> 
                 </div>
+                
+
 
                 <div class="col-5 add_order_left_box_row">
                     <i class="fas fa-asterisk"></i> From:
@@ -44,7 +43,7 @@
                 <div class="col-1"></div>
 
                 <div class="col-6 add_order_left_box_row">
-                    <input type="text" class="form-control" placeholder="Restaurant name">
+                    <%= f.text_field :from,class:"form-control",placeholder:"Restaurant name" %>
                 </div>
 
                 <div class="col-5 add_order_left_box_row">
@@ -52,11 +51,18 @@
                 </div>
 
                 <div class="col-1"></div>
+                <form onsubmit="addUser(event)">
+                    <div class="col-6 input-group add_order_left_box_row">
+                        <input type="text" id="friend-mail" class="form-control" placeholder="Friend or group name">
+                        <div class="input-group-append">
+                            <button  class="btn btn-outline-secondary add_group_button" type="submit">
+                            <i class="fas fa-plus-circle add_group_icon"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
 
-                <div class="col-6 add_order_left_box_row">
-                    <input type="text" class="form-control" placeholder="Friend or group name">
-                </div>
-
+                
                 <div class="col-4 add_order_left_box_row">
                     <i class="fas fa-camera-retro"></i> Menu Image:
                 </div>
@@ -64,8 +70,8 @@
                 <div class="col-1"></div>
 
                 <div class="col-6 add_order_left_box_row order_details_choose_file_browser">
-                    <input type="file" class="custom-file-input" id="customFile">
-                    <label class="custom-file-label" for="customFile">Choose file</label>
+                    <%= f.file_field :img_url ,class:"custom-file-input",multiple: true%>
+                    <label class="custom-file-label" for="customFile"></label>
                 </div>
 
                 <div class="col-4"></div>
@@ -76,13 +82,10 @@
                     </button>
                 </div>
 
-                <div class="col-4"></div>
-
-
+                <div class="col-4">
+                </div>
             </div>
-
-            
-            
+        <% end %>
 
         </div>
 
@@ -129,6 +132,28 @@
            
         </div>
     </div>
+
+ <script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"
+  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"> </script>
+    <script>
+        const friendMail = document.getElementById("friend-mail")
+        console.log(friendMail)
+        function addUser(){
+            e.preventDefault()
+            console.log(friendMail)
+            $.ajax({
+              url: `/orders/new/${friendMail.value}`,
+              beforeSend: function(xhr) {xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))},
+              type: 'POST',
+              success: function(result) {
+                friendMail.value = ""
+                location.reload();
+              }
+            });
+        }
+    </script>
     
 </body>
 </html>

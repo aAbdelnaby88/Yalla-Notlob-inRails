@@ -14,9 +14,13 @@ resources:users
   get '/friends', to: 'users#friends'
   post '/friends/:friend_email', to: 'users#addnewFriend'
   delete '/friends/:friend_id', to: 'users#deleteFriend' ,as: :delete_friend
+  
   get '/orders/new', to: 'orders#addorder'
+  post '/orders/new', to: 'orders#addNewOrder',as: :add_order_path
   get '/order', to: 'orders#order'
   get '/orderdetails', to: 'orders#orderdetails'
+
+  post '/orders/new/:friend_email', to: 'orders#addOrderFriends'
 end
 
   
