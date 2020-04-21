@@ -106,28 +106,40 @@ class UsersController < ApplicationController
     end
 
 
-  # Sign up users.
-  def signup_form
-    user_full_name = params['user_full_name'].to_s
-    user_email = params['user_email_address'].to_s
-    user_password = params['user_password'].to_s
-    user_confirmation_password = params['user_confirmation_password'].to_s
-
-
+    def signup_form
+        user_full_name = params['user_full_name'].to_s
+        user_email = params['user_email_address'].to_s
+        user_password = params['user_password'].to_s
+        user_confirmation_password = params['user_confirmation_password'].to_s
+    
+        @user = User.new
         # checking the vlidation of the email and the password and if true create a new user.
-    if ((user_password == user_confirmation_password) != nil)
-        my_password = BCrypt::Password.create(user_password)#=>
-        @user = User.create(name: user_full_name, email: user_email, password: my_password)
-        if @user.errors.any?
-            render 'users/signup'
+        if check_password(user_password, user_confirmation_password)
+            my_password = BCrypt::Password.create(user_password)#=>
+            @user = User.create(name: user_full_name, email: user_email, password: my_password)
+            if @user.errors.any?
+                render 'users/signup'
+            else
+                session[:logged_in_user] = @user
+                redirect_to :groups
+            end 
         else
-            session[:logged_in_user] = @user
-            redirect_to ""
-        end 
-    else
-        render 'users/signup'
+            render 'users/signup'
+        end
+      end
     end
-  end
+    
+    def check_password(user_password, confirm_password)
+        if (user_password != nil) && (confirm_password != nil)
+            if (user_password == confirm_password)
+                return true
+            else 
+                return false
+            end
+        else
+            return false
+        end
+    end
 
   def groups
     @u1=check_logged_in
