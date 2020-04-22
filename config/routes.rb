@@ -28,6 +28,8 @@ resources:users
   post '/is-friend' ,to: 'users#is_friend'
   put '/orders/:order_id', to: 'orders#change_status_order' ,as: :change_status_order
   delete '/orders/:order_id', to: 'orders#delete_order' ,as: :delete_order
+  delete '/orders/:order_id/users/:user_id', to: 'orders#delete_order_user' ,as: :delete_order_user
+  
 end
 
   
