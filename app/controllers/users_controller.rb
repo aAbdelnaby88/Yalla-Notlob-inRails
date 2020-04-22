@@ -183,21 +183,32 @@ class UsersController < ApplicationController
         end
         @friends_list = User.find_by_id(@u1['id']).friends
         @friend = nil
+
         newFriendEmail = params[:email]
-        p newFriendEmail
-        p @friends_list
-        if newFriendEmail.length > 0
-            @friends_list.each do |f|
-                if f.email == newFriendEmail
-                    p "found"
-                    @friend = f
-                    break
+        if newFriendEmail.match(/^.+@.+$/)
+            if newFriendEmail.length > 0
+                @friends_list.each do |f|
+                    if f.email == newFriendEmail
+                        p "found"
+                        @friend = f
+                        break
+                    end
                 end
             end
-        end
-        if @friend
-            msg = [{:id => @friend.id, :email => @friend.email, :name => @friend.name}]
-            return render :json => msg
+            if @friend
+                msg = [{:id => @friend.id, :email => @friend.email, :name => @friend.name}]
+                return render :json => msg
+            end
+        else
+            p newFriendEmail
+            @group= Group.where(:user => @u1['id'],:name => newFriendEmail).first
+            msg=[]
+            if @group
+                @group.users.each do |friend|
+                    msg.append({:id => friend.id, :email => friend.email, :name => friend.name})   
+                end
+                return render :json => msg   
+            end     
         end
 
         return render :json => {:error => "not-found"}.to_json, :status => 404 

@@ -17,10 +17,8 @@ resources:users
   
   get '/orders/new', to: 'orders#addorder'
   post '/orders/new', to: 'orders#addNewOrder',as: :add_order_path
-  get '/order', to: 'orders#order'
+  get '/orders', to: 'orders#order'
   get '/orderdetails', to: 'orders#orderdetails'
-
-  post '/orders/new/:friend_email', to: 'orders#addOrderFriends'
   post '/is-friend', to: "users#is_friend"
 end
 

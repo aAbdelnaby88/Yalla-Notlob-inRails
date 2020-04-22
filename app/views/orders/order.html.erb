@@ -45,31 +45,18 @@
                   </tr>
                 </thead>
                 <tbody>
+                <% @orders.each do |order| %>
                   <tr>
-                    <th scope="row">Breakfast</th>
-                    <td>ElTab3i</td>
-                    <td>10</td>
+                    <th scope="row"><%=order.meal%></th>
+                    <td><%=order.from%></td>
                     <td>5</td>
-                    <td>Waiting</td>
+                    <td>5</td>
+                    <td><%=order.status%></td>
                     <td>
-                        View finish cancel
+                        <a href='#'>View</a> <a href='#'>finish </a> <a href='#'>cancel</a> 
                     </td>
                   </tr>
-                  <tr>
-                    <th scope="row">Lunch</th>
-                    <td>Mac</td>
-                    <td>5</td>
-                    <td>5</td>
-                    <td>Finished</td>
-                    <td>View</td>
-                  </tr>
-
-                  <tr>
-                    <th scope="row">3</th>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
+                  <% end %>
                 </tbody>
               </table>
               

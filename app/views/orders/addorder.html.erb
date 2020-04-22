@@ -24,7 +24,7 @@
                     <i class="far fa-list-alt"></i> Order details
                 </h3>
             </div>
-            <%= form_with model: @order,:url => :add_order_path do |f| %>
+            <%= form_with model: @order,:url => :add_order_path,:id=>"form" do |f| %>
             <div class="row add_order_left_box_container">
                 <div class="col-5 add_order_left_box_row">
                     <i class="fas fa-bread-slice"></i> Order for:
@@ -32,7 +32,7 @@
                 <div class="col-1"></div>
 
                 <div class="col-6 add_order_left_box_row">
-                    <%= f.select(:meal  ,['Breakfast','Lunch','Dinner'],{},
+                    <%= f.select(:meal  ,['breakfast','lunch','dinner'],{},
                   {:class=>"form-control"}) %>
                 </div>
 
@@ -102,32 +102,9 @@
                 </h3>
             </div>
 
-            <div class="row add_orders_right_box_container">
-                <div class="col-2">
-                    <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
-                </div>
+            <div id="friendsList" class="row add_orders_right_box_container">
+                
 
-                <div class="col-2 add_order_name_row">
-                    HIS NAME 
-                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip"
-                        data-placement="right" title="Remove friend">
-                        <i class="fas fa-user-times"></i>
-                    </button>
-                </div>
-
-                <div class="col-4"></div>
-
-                <div class="col-2"> 
-                    <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
-                </div>
-
-                <div class="col-2 add_order_name_row">
-                    HIS NAME
-                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip"
-                        data-placement="right" title="Remove friend">
-                        <i class="fas fa-user-times"></i>
-                    </button>
-                </div>
 
             </div>
 
@@ -140,7 +117,7 @@
     <script>
         const friendMail = document.getElementById("friend-mail")
         console.log(friendMail)
-
+        const finalFriendsList=[] 
         function addUser(e) {
             console.log("dddd")
             e.preventDefault()
@@ -155,12 +132,56 @@
                     email: friendMail.value
                 },
                 success: function (result) {
-                    /* friendMail.value = ""
-                    location.reload(); */
-                    console.log(result)
+                  const list=document.getElementById('friendsList')
+            
+                  result.forEach(element => {
+                  if (!finalFriendsList.find((ele)=> ele.email == element.email))
+                  {
+                      finalFriendsList.push(element)
+                  list.innerHTML+=`
+                          <div class="col-2">
+                  <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
+                    </div>
+
+                <div class="col-2 add_order_name_row">
+                    ${element.name} 
+                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip"
+                        data-placement="right" title="Remove friend">
+                        <i class="fas fa-user-times"></i>
+                    </button>
+                </div>
+
+                <div class="col-2"></div> `}
+                });
+
+
                 }
             });
         }
+
+        $("form#form").submit(function (e){
+            console.log(e)
+            e.preventDefault()
+            var formData=new FormData(this)
+            console.log(finalFriendsList)
+            formData.append("users",JSON.stringify(finalFriendsList))
+
+            $.ajax({
+                url: `/orders/new`,
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('X-CSRF-Token', $('meta[name="csrf-token"]').attr('content'))
+                },
+                type: 'POST',
+                data: formData ,
+                success: function (result) {
+                    console.log(formData)
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+            return false
+        })
     </script>
 
 </body>

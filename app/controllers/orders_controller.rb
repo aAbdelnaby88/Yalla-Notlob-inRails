@@ -15,43 +15,26 @@ class OrdersController < ApplicationController
     end
 
     def addorder
-        
+
     end
 
 
     def addNewOrder
-        
-    end
-
-    def addOrderFriends
-        name = params[:friend_email]
-        p "hi there"
-        p name
-        @friends_list = User.find_by_id(@u1['id']).friends
-        found= false
-        if newFriendEmail.length > 0
-            @friends_list.each do |f|
-                if f.email == newFriendEmail
-                    found=true
-                    break
-                end
-            end
-
-            if found
-                flash[:alert]= "Already Friends!!"
-            else
-                friend=User.find_by_email(newFriendEmail)
-                Friendship.create(:friend_a_id=>@u1['id'],:friend_b_id=>friend.id)
-            end
-        else
-            flash[:alert]= "Enter Valid Email!!"
+        @u1=session[:logged_in_user]
+        @order=Order.create(:meal=>params['meal'],:from=>params['from'],:user_id=>@u1['id'],:status =>"waiting")    
+        @usersData=JSON.parse(params['users'])
+        @usersData.each do |u|
+            user= User.find(u['id'])
+            @order.users << user
         end
-        
-
+        redirect_to '/orders'
     end
 
 
-    def order 
+    def order
+        @u1=session[:logged_in_user]
+        @orders=Order.where(:user=>@u1['id'])
+        p @orders
     end
 
     def orderdetails
