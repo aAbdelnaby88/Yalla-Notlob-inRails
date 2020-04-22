@@ -19,10 +19,10 @@ This project was made by the students of Cloud Platform Development track @ ITI 
 ## Previews:
 
 ### :unlock: Sign In:
-
+![SignIn](https://github.com/aAbdelnaby88/Yalla-Notlob-inRails/blob/theJaxon/etc/SignIn.jpg)
 
 ### :key: Sign Up:
-
+![SignUp](https://github.com/aAbdelnaby88/Yalla-Notlob-inRails/blob/theJaxon/etc/SignUp.jpg)
 
 
 ### :blue_book: Libraries used:
