@@ -17,10 +17,9 @@
         <div class="col-5"></div>
 
         <div class="col-2">
-
-            <button class="btn btn-primary order_place_new_order_button" type="submit">
+            <%= button_to  '/orders/new',{:method => "get",class: "btn btn-primary order_place_new_order_button"} do %>
                 <i class="fas fa-plus-circle place_order_icon"></i> Place a new order
-            </button>
+            <%end%>
 
         </div>
 
@@ -49,12 +48,20 @@
                   <tr>
                     <th scope="row"><%=order.meal%></th>
                     <td><%=order.from%></td>
-                    <td>5</td>
-                    <td>5</td>
+                    <td><%= order.users.length %></td>
+                    <td><%= OrderUser.where(:status => 1 ,:order_id=>order['id']).count() %></td>
                     <td><%=order.status%></td>
+                    
+                    <% if order.status == "waiting" %>
+                       <td>
+                        <%= link_to "View", show_order_url(order.id)%>
+                         <%= link_to "Finish",change_status_order_url(:order_id =>order.id),:method => 'put'%> 
+                        <%= link_to "Cancel",delete_order_url(:order_id =>order.id),:method => 'delete'%>
+                      </td>
+                    <% else %>
                     <td>
-                        <a href='#'>View</a> <a href='#'>finish </a> <a href='#'>cancel</a> 
-                    </td>
+                    <%= link_to "View", show_order_url(order.id)%> </td>
+                    <% end %>
                   </tr>
                   <% end %>
                 </tbody>

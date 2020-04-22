@@ -18,7 +18,7 @@ resources:users
   get '/orders/new', to: 'orders#addorder'
   post '/orders/new', to: 'orders#addNewOrder',as: :add_order_path
   get '/orders', to: 'orders#order'
-  get '/orders/:id', to: 'orders#show_order'
+  get '/orders/:id', to: 'orders#show_order',as: :show_order
   post '/orders/:id/items', to: 'orders#create_item'
   delete '/orders/:id/items/:item_id', to: 'orders#delete_item',as: :delete_item
   post '/logout', to: 'users#log_out' 
@@ -26,6 +26,8 @@ resources:users
   post '/forgot_password', to: 'users#forgot_password_action'
   get '/change_password_form', to: 'users#change_password_form'
   post '/is-friend' ,to: 'users#is_friend'
+  put '/orders/:order_id', to: 'orders#change_status_order' ,as: :change_status_order
+  delete '/orders/:order_id', to: 'orders#delete_order' ,as: :delete_order
 end
 
   

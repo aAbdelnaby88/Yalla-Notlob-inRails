@@ -34,6 +34,7 @@ class OrdersController < ApplicationController
     def order
         @u1=session[:logged_in_user]
         @orders=Order.where(:user=>@u1['id'])
+        
         p @orders
     end
 
@@ -72,5 +73,21 @@ class OrdersController < ApplicationController
         Item.find(params[:item_id]).delete
 
         redirect_to action: 'show_order', id: @order.id
+    end
+
+    def delete_order
+        order_id=params[:order_id]
+        @users=OrderUser.where(:order_id=>order_id)
+        @users.each do |u|
+            OrderUser.where(:order_id=>order_id,:user_id =>u.id).delete
+        end
+        p Order.find(order_id).delete
+        redirect_to '/orders'
+    end
+
+    def change_status_order
+        order_id=params[:order_id]
+        Order.find(order_id).update_attribute(:status,"finished")
+        redirect_to '/orders'
     end
 end

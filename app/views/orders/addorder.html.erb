@@ -120,7 +120,7 @@
         const finalFriendsList=[] 
         function addUser(e) {
             console.log("dddd")
-            e.preventDefault()
+            e.preventDefault()          
             console.log(friendMail)
             $.ajax({
                 url: `/is-friend`,
@@ -131,32 +131,43 @@
                 data: {
                     email: friendMail.value
                 },
-                success: function (result) {
+                success: function showData (result) {
                   const list=document.getElementById('friendsList')
             
                   result.forEach(element => {
                   if (!finalFriendsList.find((ele)=> ele.email == element.email))
                   {
-                      finalFriendsList.push(element)
-                  list.innerHTML+=`
-                          <div class="col-2">
-                  <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
+                    finalFriendsList.push(element)
+                    list.innerHTML+=`
+                    <div class="col-2">
+                    <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
                     </div>
 
-                <div class="col-2 add_order_name_row">
-                    ${element.name} 
-                    <button type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip"
+                    <div class="col-2 add_order_name_row">
+                        ${element.name} 
+                    <button onclick="removeFriend(${element.id})" type="button" class="btn btn-primary btn-sm delete_friend_button" data-toggle="tooltip"
                         data-placement="right" title="Remove friend">
                         <i class="fas fa-user-times"></i>
                     </button>
-                </div>
-
-                <div class="col-2"></div> `}
+                    </div>
+                    
+                    <div class="col-2"></div> `}
                 });
 
 
                 }
             });
+        }
+
+        function removeFriend(m)
+        {   let c = 0
+            finalFriendsList.forEach( (s)=>{
+                if(s.id == m)
+                    finalFriendsList.splice(c, 1);
+                else c++;
+            console.log(JSON.stringify(finalFriendsList))
+            })
+            
         }
         
       
