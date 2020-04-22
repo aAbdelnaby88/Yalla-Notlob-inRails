@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
     def show_order
         @user = User.find(session[:logged_in_user]["id"])
 
-        @order_user = @user.order_user.where("order" => params["id"],"status" => 1).first
+        @order_user = @user.order_user.where("order" => params["id"]).first
         p @order_user
         if @order_user
             @order = @order_user.order
