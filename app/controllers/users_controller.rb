@@ -3,6 +3,14 @@
 class UsersController < ApplicationController
     layout false, only: [:signin, :signup]
     require 'bcrypt'
+
+    def index 
+        @u1=check_logged_in
+        if @u1 == nil
+            redirect_to :signin
+        end
+    end
+
     def signin_form
         user_email = params[:user_email]
         password = params[:user_password]
@@ -13,7 +21,7 @@ class UsersController < ApplicationController
         # check the user's login password with the encrpted pass from the database.
         if BCrypt::Password.new(is_regestered_user.password) == password
             session[:logged_in_user] = is_regestered_user
-            redirect_to :groups
+            redirect_to ""
         else
             render 'users/signin'
         end
@@ -36,7 +44,7 @@ class UsersController < ApplicationController
     # signin method for the html rendering
     def signin
         unless check_logged_in == nil
-            redirect_to :groups
+            redirect_to ""
         end
     end
 
@@ -44,7 +52,7 @@ class UsersController < ApplicationController
     def signup
         @user = User.new
         unless check_logged_in == nil
-            redirect_to :groups
+            redirect_to ""
         end
     end
 
@@ -53,7 +61,7 @@ class UsersController < ApplicationController
         @u1=check_logged_in
         p @u1
         if @u1 == nil
-            redirect_to :signin
+            return redirect_to :signin
         end
         @friends_list = User.find_by_id(@u1['id']).friends
         return @friends_list
@@ -62,7 +70,6 @@ class UsersController < ApplicationController
     def addnewFriend    
         newFriendEmail =params[:friend_email]+".com"
         @u1=check_logged_in
-        p @u1
         if @u1 == nil
             redirect_to :signin
         end
@@ -99,16 +106,15 @@ class UsersController < ApplicationController
     end
 
 
-  # Sign up users.
-  def signup_form
-    user_full_name = params['user_full_name'].to_s
-    user_email = params['user_email_address'].to_s
-    user_password = params['user_password'].to_s
-    user_confirmation_password = params['user_confirmation_password'].to_s
-
-
+    def signup_form
+        user_full_name = params['user_full_name'].to_s
+        user_email = params['user_email_address'].to_s
+        user_password = params['user_password'].to_s
+        user_confirmation_password = params['user_confirmation_password'].to_s
+    
+        @user = User.new
         # checking the vlidation of the email and the password and if true create a new user.
-        if ((user_password == user_confirmation_password) != nil)
+        if check_password(user_password, user_confirmation_password)
             my_password = BCrypt::Password.create(user_password)#=>
             @user = User.create(name: user_full_name, email: user_email, password: my_password)
             if @user.errors.any?
@@ -120,14 +126,25 @@ class UsersController < ApplicationController
         else
             render 'users/signup'
         end
-
-  end
+    end
+        
+    def check_password(user_password, confirm_password)
+        if (user_password != nil) && (confirm_password != nil)
+            if (user_password == confirm_password)
+                return true
+            else 
+                return false
+            end
+        else
+            return false
+        end
+    end
 
   def groups
     @u1=check_logged_in
     p @u1
     if @u1 == nil
-        redirect_to :signin
+        return redirect_to :signin
     end
     @group = Group.new
     @groups = Group.eager_load(:users).where(:user_id =>@u1['id'])
@@ -213,5 +230,4 @@ class UsersController < ApplicationController
 
         return render :json => {:error => "not-found"}.to_json, :status => 404 
     end
-
 end

@@ -6,6 +6,12 @@ ruby '2.7.0'
 #Dotenv
 gem 'dotenv-rails', groups: [:development, :test]
 
+# For securing password.
+gem 'bcrypt', '~> 3.1.7'
+
+# smtp gem
+gem 'net-smtp'
+
 #AWS S#
 gem 'aws-sdk-s3', '~> 1.61', '>= 1.61.2'
 
@@ -31,7 +37,7 @@ gem 'jbuilder', '~> 2.5'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
-gem 'bcrypt', '~> 3.1.7'
+
 
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'

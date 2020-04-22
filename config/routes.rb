@@ -3,9 +3,9 @@ Rails.application.routes.draw do
 resources:users
   get '/', to: 'users#index'
   get '/signup', to: 'users#signup'
-  get '/signup_form', to: 'users#signup_form'
+  post '/signup', to: 'users#signup_form'
   get '/signin', to: 'users#signin'
-  get '/signin_form', to: 'users#signin_form'
+  post '/signin', to: 'users#signin_form'
   get '/groups', to: 'users#groups'
   post '/groups', to: 'users#new_group'
   delete '/groups/:id', to: 'users#delete_group',as: :delete_group
@@ -18,8 +18,13 @@ resources:users
   get '/orders/new', to: 'orders#addorder'
   post '/orders/new', to: 'orders#addNewOrder',as: :add_order_path
   get '/orders', to: 'orders#order'
-  get '/orderdetails', to: 'orders#orderdetails'
-  post '/is-friend', to: "users#is_friend"
+  get '/orders/:id', to: 'orders#show_order'
+  post '/orders/:id/items', to: 'orders#create_item'
+  delete '/orders/:id/items/:item_id', to: 'orders#delete_item',as: :delete_item
+  post '/logout', to: 'users#log_out' 
+  get '/forgot_password', to: 'users#forgot_password'
+  post '/forgot_password', to: 'users#forgot_password_action'
+  get '/change_password_form', to: 'users#change_password_form'
 end
 
   

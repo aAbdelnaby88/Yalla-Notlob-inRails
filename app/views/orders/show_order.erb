@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/stylesheets/users.css">
+  <% @title = "Order Details" %>
+</head>
+
+<body>
+  <h3 id="order_details_page_header">
+    <i class="fas fa-clipboard-list"></i> Order details
+  </h3>
+
+  <div class="row">
+    <div class="col-5 table-responsive order_details_table_left">
+      <table class="table">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Person</th>
+            <th scope="col">Item</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Price</th>
+            <th scope="col">Comment</th>
+            <th scope="col">Action</th>
+
+          </tr>
+          <% for item in @order.items %>
+
+          <tr>
+            <th scope="row"><%= item.order_user.user.name %></th>
+            <td><%= item.name %></td>
+            <td><%= item.amount %></td>
+            <td><%= item.price %></td>
+            <td><%= item.comment %></td>
+            <td>
+              <% if @user["id"] == item.order_user.user.id %>
+              <%= button_to delete_item_path(:id =>@order.id,:item_id=>item.id),{:method => "delete",class: "btn btn-secondary close_button"} do %>
+              <i class="fas fa-times"></i>
+              <% end %>
+              <% end %>
+              
+            </td>
+          </tr>
+          <%end%>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+
+    </div>
+
+    <div class="col-1"></div>
+
+    <div class="col-5">
+      <a href="http://">This is a link</a> <br>
+      <a href="http://">This is a link</a>
+
+    </div>
+  </div>
+  <form action="/orders/<%=@order.id%>/items" method="POST">
+    <div class="row">
+      <div class="col-5 forms_under_table">
+        <label class="mr-sm-2" for="name">Name</label>
+
+        <input type="text" class="form-control order_details_form_1" name="name" placeholder="Item name">
+
+        <label class="mr-sm-2" for="amount">Amount</label>
+        <!--       <select class="custom-select mr-sm-2 order_details_form_1" id="inlineFormCustomSelect">
+        <option selected value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select> -->
+        <input class="custom-select m  r-sm-2 order_details_form_1" type="number" name="amount" id="">
+
+        <!--Price -->
+        <label class="mr-sm-2" for="price">Price</label>
+        <input class="custom-select m  r-sm-2 order_details_form_1" type="number" name="price" id="">
+        <!--Comment-->
+        <label for="comment">Comment</label>
+        <textarea class="form-control order_details_form_1" id="comment" name="comment" rows="3"></textarea>
+        <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+
+        <button class="btn btn-primary order_details_add_button" type="submit">
+          <i class="fas fa-plus-circle place_order_icon"></i> Add
+        </button>
+      </div>
+
+    </div>
+
+  </form>
+
+</body>
+
+</html>
