@@ -40,7 +40,7 @@
               <i class="fas fa-times"></i>
               <% end %>
               <% end %>
-              
+
             </td>
           </tr>
           <%end%>
@@ -53,10 +53,51 @@
 
     <div class="col-1"></div>
 
+    <% if @user.id == @order.user_id%>
     <div class="col-5">
-      <a href="http://">This is a link</a> <br>
-      <a href="http://">This is a link</a>
+      <a href="#" data-toggle="modal" data-target="#invitedFriends">
+        <%= @order.users.length-1%> friends invited, click to view</a> <br>
 
+      <%end%>
+    </div>
+
+    <div class="modal fade" id="invitedFriends" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+      aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Invited friends</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div id="friendsList" class="row add_orders_right_box_container">
+              <%for friend in @order.users %>
+              <% if friend.id != @user.id%>
+              <div class="col-2">
+                <img src="/images/teenage.svg" width="50" height="50" alt="" srcset="">
+                <h7><%= friend.name%></h7>
+
+              </div>
+
+              <div class="col-2 add_order_name_row">
+                <%= button_to  delete_order_user_path(:order_id=>@order.id,:user_id=>friend.id),{:method => "delete",class: "btn btn-danger close_button"} do %>
+                <i class="fas fa-user-times"></i>
+                <% end %>
+              </div>
+
+              <div class="col-2"></div>
+              <%end%>
+              <%end%>
+            </div>
+
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <form action="/orders/<%=@order.id%>/items" method="POST">

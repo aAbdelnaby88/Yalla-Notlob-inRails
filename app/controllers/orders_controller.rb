@@ -39,13 +39,18 @@ class OrdersController < ApplicationController
     end
 
     def show_order
-        @order = Order.where(id: params[:id]).first
-        @user = session[:logged_in_user]
+        @user = User.find(session[:logged_in_user]["id"])
 
-        unless @order
-            return render_404
+        @order_user = @user.order_user.where("order" => params["id"],"status" => 1).first
+        p @order_user
+        if @order_user
+            @order = @order_user.order
+            if @order.status == "waiting"
+                return render :show_order
+            end
         end
-        
+
+        return render_404        
     end
 
     def render_404
@@ -89,5 +94,15 @@ class OrdersController < ApplicationController
         order_id=params[:order_id]
         Order.find(order_id).update_attribute(:status,"finished")
         redirect_to '/orders'
+    end
+
+    def delete_order_user
+        order_id=params[:order_id]
+        user_id=params[:user_id]
+        
+        @order_user = OrderUser.where(:order_id=>order_id,:user_id =>user_id).first
+        Item.where(:order_user => @order_user).delete_all
+        @order_user.delete
+        redirect_to action: 'show_order', id: order_id
     end
 end
