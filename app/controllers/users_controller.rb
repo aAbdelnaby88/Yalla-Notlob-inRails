@@ -6,6 +6,17 @@ class UsersController < ApplicationController
 
     def index 
         @u1=check_logged_in
+        if Order.where(:user_id=>@u1['id']).order(created_at: :desc)
+            @orders=Order.where(:user_id=>@u1['id']).order(created_at: :desc)
+        end
+        @friends=Friendship.where(:friend_a_id => @u1['id']).or(Friendship.where(:friend_b_id => @u1['id']))
+        p @friends
+        @friendOrders=[]
+        @friends.each do |f|
+            friend_id= f['friend_a_id'] == @u1['id']? f['friend_b_id']: f['friend_a_id']  
+                @friendOrders.push(* Order.where(:user_id => friend_id).order(created_at: :desc))
+        end
+        p @friendOrders
         if @u1 == nil
             redirect_to :signin
         end
@@ -101,7 +112,12 @@ class UsersController < ApplicationController
             redirect_to :signin
         end
         f = Friendship.where(friend_a_id: @u1['id'], friend_b_id: params[:friend_id]).first()
-        Friendship.delete(f.id)
+        if f
+            Friendship.delete(f.id)
+        else
+            f = Friendship.where(friend_b_id: @u1['id'], friend_a_id: params[:friend_id]).first()
+            Friendship.delete(f.id)
+        end
         redirect_to :friends
     end
 

@@ -32,6 +32,7 @@
     </div>
 
     <div class="row friends_list_container">
+      <% if @friends_list != nil %>  
         <% @friends_list.each do |friend| %>
             <div class="col-2">
                 <img src="/images/teenage.svg" width="100px" height="100px" alt="" srcset="">
@@ -44,7 +45,8 @@
                 <% end %>
             </div>
             <% end %>
-
+        <%end%>
+        
     </div>
 
  <script

@@ -41,18 +41,25 @@
   <div class="row home_row_2">
 
     <div class="col-5 home_row_2_col_1">
-      <a href=""> Lunch on 13/3/2013 </a> 
-      </br>
-      <a href=""> Breakfast on 13/3/2013 </a> 
+    <% if @orders != nil %>
+      <% @orders.each do |order| %>
+        <%= link_to "#{order.meal} from #{order.from} on #{order.created_at.to_date} ", show_order_url(order.id)%> </br>
+        <%end%>
 
+    <%end%> 
+        
     </div>
 
     <div class="col-2"></div>
     <div class="col-5 home_row_2_col_3">
-      <a href="">Islam</a> has created <a href="">an order</a> for lunch from <a href="">Mac</a>
-      </br>
-      <a href="">Ahmed</a> has created <a href="">an order</a> for lunch from <a href="">Tom&Jerry</a>
-
+    <% if @friendOrders != nil %>
+      <% @friendOrders.each do |friend_order| %>
+        <a href="#"><%= User.find(friend_order['user_id']).name %></a> has created 
+         <%= link_to "an order", show_order_url(friend_order.id)%> for <%= friend_order.meal%> from 
+        <a href="#"><%= friend_order.from%></a>
+        </br>
+      <% end %>
+    <% end %>
     </div>
 
   </div>

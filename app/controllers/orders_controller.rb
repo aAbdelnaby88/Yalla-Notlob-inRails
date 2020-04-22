@@ -21,7 +21,9 @@ class OrdersController < ApplicationController
 
     def addNewOrder
         @u1=session[:logged_in_user]
+        
         @order=Order.create(:meal=>params['meal'],:from=>params['from'],:user_id=>@u1['id'],:status =>"waiting")    
+        OrderUser.create(:order_id=>@order['id'],:user_id=> @u1['id'],:status=>1)
         @usersData=JSON.parse(params['users'])
         @usersData.each do |u|
             user= User.find(u['id'])
@@ -77,11 +79,15 @@ class OrdersController < ApplicationController
 
     def delete_order
         order_id=params[:order_id]
+        @u1=session[:logged_in_user]
         @users=OrderUser.where(:order_id=>order_id)
-        @users.each do |u|
-            OrderUser.where(:order_id=>order_id,:user_id =>u.id).delete
+        OrderUser.where(:order_id=>order_id,:user_id =>@u1['id']).first.delete
+        if @users!=nil
+            @users.each do |u|
+                OrderUser.where(:order_id=>order_id,:user_id =>u.id).delete
+            end 
         end
-        p Order.find(order_id).delete
+        Order.find(order_id).delete
         redirect_to '/orders'
     end
 
